@@ -1,0 +1,1 @@
+sudo minishift start --vm-driver virtualbox --cpus 2 --memory 8192 --skip-registry-check=true
