@@ -76,7 +76,7 @@ node {
     openshiftVerifyService namespace: project, svcName: dest, verbose: 'false'
   }
   stage('Switch over to new Version') {
-    input "Switch Production?"
+    input "Hey PAG folks, wanna switch to Production?"
     sh 'oc patch route example -p \'{"spec":{"to":{"name":"' + dest + '"}}}\''
     sh 'oc get route example > oc_out.txt'
     oc_out = readFile('oc_out.txt')
