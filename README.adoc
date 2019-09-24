@@ -22,23 +22,16 @@ To set this demo up use the following commands (replace *xyz* with your initials
 
 [source,bash]
 ----
-oc new-project xyz-bluegreen --display-name="Blue/Green Deployment Pipeline Demo"
+oc new-project pag-bluegreen --display-name="Blue/Green Deployment Pipeline Demo"
 oc new-app jenkins-persistent --param MEMORY_LIMIT=1Gi --param VOLUME_CAPACITY=2Gi
 oc new-app openshift/deployment-example:v1 --name=example-green
 oc new-app openshift/deployment-example:v2 --name=example-blue
 oc set triggers dc/example-green --remove-all
 oc set triggers dc/example-blue --remove-all
 oc expose svc/example-green --name=example
-oc create -f https://raw.githubusercontent.com/wkulhanek/openshift-bluegreen/master/example-pipeline.yaml
+oc create -f https://raw.githubusercontent.com/fabianschyrer/pag-openshift-blue-green-example/master/example-pipeline.yaml
 ----
 
-When running on OpenShift 3.3 and earlier set the Jenkins Password for user *admin*:
-[source,bash]
-----
-oc env dc/jenkins JENKINS_PASSWORD=admin123
-----
-[NOTE]
-On OpenShift 3.4 and later Jenkins uses OAUTH authentication into the OpenShift authentication plugin. Use your regular OpenShift UserID and Password to log into Jenkins.
 
 * First we create a new project (*bluegreen*).
 * In this project we create a Jenkins instance with persistent storage. Technically this would not be necessary - OpenShift would launch an ephemeral version of Jenkins every time a pipeline is run - but that's quite inefficient when running a pipeline multiple times.
